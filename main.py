@@ -722,7 +722,9 @@ class TextAssetCreator:
             if not (bgcolor in self.bg_palette):
                 self.bg_palette.append(bgcolor)
                 self.fc_palette.append(bgcolor.replace("[48;", "[38;"))
-            self.bg_color = len(self.bg_palette)-1
+                self.bg_color = len(self.bg_palette)-1
+            else:
+                self.bg_color = self.bg_palette.index(bgcolor)
             self.actualize_cursor()
         bg_pip.nargs = 0
 
@@ -733,7 +735,9 @@ class TextAssetCreator:
             if not (ftcolor in self.fc_palette):
                 self.fc_palette.append(ftcolor)
                 self.bg_palette.append(ftcolor.replace("[38;", "[48;"))
-            self.font_color = len(self.fc_palette)-1
+                self.font_color = len(self.fc_palette)-1
+            else:
+                self.font_color = self.fc_palette.index(ftcolor)
             self.actualize_cursor()
         ft_pip.nargs = 0
 
@@ -743,7 +747,9 @@ class TextAssetCreator:
             brush, bgcolor, ftcolor, style = self.sprites[self.frame].chart[crd]
             if not (brush in self.brushes):
                 self.brushes.append(brush)
-            self.brush = len(self.brushes)-1
+                self.brush = len(self.brushes)-1
+            else:
+                self.brush = self.brushes.index(brush)
             self.actualize_cursor()
         brush_pip.nargs = 0
 
