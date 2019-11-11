@@ -12,5 +12,5 @@ Enjoy and share your art on our discord [server](https://discord.gg/7GE5Zfy) :)
 
 # Requirements:
 - Python >= 3.7
-- flore1 >= 1.5.0  `pip install flore1`
+- flore1 >= 1.5.1  `pip install flore1`
 
