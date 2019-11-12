@@ -1,5 +1,6 @@
 from flore1 import *
 import time
+import copy
 
 fix_color()
 show_logo(3)
@@ -10,7 +11,8 @@ string = ""
 clen = ""
 for c in range(0, 255):
     clen += "|"+str(c)+"|"
-    string += "bc:"+str(c)+" "+str(c)+" cc:0"
+
+    string += "fc:15bc:"+str(c)+" "+str(c)+" cc:0"
     if len(clen) > 55:
         colors_bm.append(string)
         string = ""
@@ -389,9 +391,9 @@ class TextAssetCreator:
 
         def copy_frame():
             self.clip = {
-                "chart": self.sprites[self.frame].chart,
-                "prtcrd": self.sprites[self.frame].prtcrd,
-                "act_prtcrd": self.sprites[self.frame].act_prtcrd
+                "chart": copy.deepcopy(self.sprites[self.frame].chart),
+                "prtcrd": copy.deepcopy(self.sprites[self.frame].prtcrd),
+                "act_prtcrd": copy.deepcopy(self.sprites[self.frame].act_prtcrd)
             }
             draw_rectangle("\033[48;5;236m \33[0m", 31, 2, 30+self.w*2, self.h+1)
             time.sleep(0.2)
@@ -401,9 +403,9 @@ class TextAssetCreator:
 
         def paste_frame():
             if not hasattr(self, "clip"): return
-            self.sprites[self.frame].chart = self.clip["chart"]
-            self.sprites[self.frame].prtcrd = self.clip["prtcrd"]
-            self.sprites[self.frame].act_prtcrd = self.clip["act_prtcrd"]
+            self.sprites[self.frame].chart = copy.deepcopy(self.clip["chart"])
+            self.sprites[self.frame].prtcrd = copy.deepcopy(self.clip["prtcrd"])
+            self.sprites[self.frame].act_prtcrd = copy.deepcopy(self.clip["act_prtcrd"])
             draw_rectangle("\033[48;5;236m \33[0m", 31, 2, 30+self.w*2, self.h+1)
             time.sleep(0.2)
             draw_rectangle("\033[48;5;234m \33[0m", 31, 2, 30+self.w*2, self.h+1)
@@ -483,6 +485,10 @@ class TextAssetCreator:
                 draw_rectangle("\033[48;5;234m \33[0m", 31, 2, 30+self.w*2, self.h+1)
 
             self.scene.show(force=True, repeat_color=True)
+
+            crd = str(int(self.cursor.x-1)) + "|" + str(int(self.cursor.y-1))
+            print_crd("           ", 46, self.h+2)
+            print_crd("CRD "+crd, 46, self.h+2)
 
             if not ((backup.x, backup.y) in self.sprites[self.frame].act_prtcrd):
                 if 0 < backup.x <= self.w*2-1 and 0 < backup.y <= self.h-1:
@@ -567,10 +573,7 @@ class TextAssetCreator:
             bgcolor = self.bg_palette[self.bg_color]
             ftcolor = self.fc_palette[self.font_color]
             if brush == " " and bgcolor == None:
-                if crd in self.sprites[self.frame].chart:
-                    erase()
-                else:
-                    char = " "
+                erase()
             else:
                 char = brush
             self.sprites[self.frame].chart[crd] = (char, bgcolor, ftcolor, None)
