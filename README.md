@@ -1,5 +1,6 @@
 # flore1-paint
 An ascii color paint/animation software for the terminal
+Disclaimer: It was originaly made for fun in one afternoon. My code for this looks rubbish to me.
 
 # How to use it ?
 ```
